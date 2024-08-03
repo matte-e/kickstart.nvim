@@ -182,6 +182,10 @@ vim.keymap.set('v', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set('v', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('v', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('v', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
+-- open terminal
+vim.keymap.set('n', '<leader>p', ':vsplit term://bash | :vertical resize 80<CR>')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -190,9 +194,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
--- Neotree settings :help Neotree
-vim.keymap.set('n', 'nn', ':Neotree<CR>', { desc = 'Move focus to the upper window' })
-vim.keymap.set('n', 'nnc', ':Neotree<CR>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -570,7 +571,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
-        -- gopls = {},
+        gopls = {},
         pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -803,7 +804,7 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { -- Collection of various small independent plugins/modules
+  { -- Collection ,of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
       -- Better Around/Inside textobjects
@@ -895,7 +896,7 @@ require('lazy').setup({
   --      hide_gitignored = true,
   --    },
   --  },
-  --},
+  --}
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
