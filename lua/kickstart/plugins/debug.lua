@@ -30,9 +30,9 @@ return {
     return {
       -- Basic debugging keymaps, feel free to change to your liking!
       { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
-      { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
-      { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
-      { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
+      { '<F6>', dap.step_into, desc = 'Debug: Step Into' },
+      { '<F7>', dap.step_over, desc = 'Debug: Step Over' },
+      { '<F8>', dap.step_out, desc = 'Debug: Step Out' },
       { '<leader>b', dap.toggle_breakpoint, desc = 'Debug: Toggle Breakpoint' },
       {
         '<leader>B',
@@ -42,13 +42,29 @@ return {
         desc = 'Debug: Set Breakpoint',
       },
       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-      { '<F7>', dapui.toggle, desc = 'Debug: See last session result.' },
+      { '<F4>', dapui.toggle, desc = 'Debug: See last session result.' },
       unpack(keys),
     }
   end,
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local current_directory = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand '<sfile>:p'), ':h')
+    local path = current_directory .. 'main'
+    local _type = 'cppdbg'
+
+    dap.configurations.cpp = {
+      {
+        args = {},
+        cwd = '${workspaceFolder}',
+        name = 'Launch',
+        program = path,
+        request = 'launch',
+        runInTerminal = true,
+        stopOnEntry = false,
+        type = _type,
+      },
+    }
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -64,6 +80,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        _type,
       },
     }
 
