@@ -158,6 +158,9 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.api.nvim_set_hl(0, 'ColorColumn', { bg = 'Grey' })
+vim.opt.colorcolumn = '81'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -241,6 +244,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-rsi',
 
   require 'kickstart.plugins.which_key',
   -- NOTE: Plugins can specify dependencies.
@@ -438,6 +442,9 @@ require('lazy').setup({
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+
+          -- Jump to header/source
+          map('gh', ':ClangdSwitchSourceHeader<CR>', '[G]oto [h]eader/source')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
@@ -884,5 +891,6 @@ require('lazy').setup({
   },
 })
 
+vim.api.nvim_set_hl(0, 'ColorColumn', { bg = 'Grey' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
